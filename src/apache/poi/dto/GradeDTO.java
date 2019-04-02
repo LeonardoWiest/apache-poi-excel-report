@@ -7,15 +7,19 @@ import apache.poi.annotation.ExcelReport;
 
 public class GradeDTO {
 
+	@ExcelReport(descricaoColuna = "CÓDIGO")
 	private Long id;
 
+	@ExcelReport(descricaoColuna = "DESCRIÇÃO")
 	private String descricao;
 
+	@ExcelReport(descricaoColuna = "DATA INÍCIO")
 	private Date dataInicio;
 
+	@ExcelReport(descricaoColuna = "DATA FIM")
 	private Date dataFim;
 
-	@ExcelReport(nivel = "1")
+	@ExcelReport(nivel = "1", clazz = { ProdutoDTO.class })
 	private List<ProdutoDTO> ProdutoDTO;
 
 	public Long getId() {

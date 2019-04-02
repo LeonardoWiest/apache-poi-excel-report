@@ -1,4 +1,5 @@
 import java.io.FileOutputStream;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import apache.poi.converter.Converter;
 import apache.poi.dto.GradeDTO;
 import apache.poi.dto.ProdutoDTO;
 
@@ -51,7 +53,7 @@ public class ExcelReport {
 			Sheet sheet = wb.createSheet("NOME DA PLANILHA");
 			setCellStyles(wb);
 
-			criarColunas(listaGrades);
+			criarColunas(listaGrades, sheet);
 
 			/*
 			 * sheet.setColumnWidth(0, 4000); sheet.setColumnWidth(1, 12000);
@@ -79,14 +81,30 @@ public class ExcelReport {
 			fileOut.close();
 
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.getStackTrace());
 		}
 
 	}
 
-	private void criarColunas(List<?> lista) {
-		
-		
+	private void criarColunas(List<?> lista, Sheet sheet) {
+
+		Field[] listaColunas = Converter.getAllFields(lista.get(0).getClass());
+
+		int rowIndex = 0;
+		Row row = null;
+		Cell c = null;
+
+		row = sheet.createRow(rowIndex);
+
+		for (Field field : listaColunas) {
+			apache.poi.annotation.ExcelReport dtoReport = field
+					.getDeclaredAnnotation(apache.poi.annotation.ExcelReport.class);
+
+			c = row.createCell(rowIndex++);
+			c.setCellValue(dtoReport.descricaoColuna());
+			c.setCellStyle(csBold);
+
+		}
 
 	}
 

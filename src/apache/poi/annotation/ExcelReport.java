@@ -10,4 +10,8 @@ public @interface ExcelReport {
 
 	String nivel() default "0";
 
+	String descricaoColuna() default "";
+
+	Class<?>[] clazz() default {};
+
 }

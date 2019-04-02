@@ -2,14 +2,20 @@ package apache.poi.dto;
 
 import java.math.BigDecimal;
 
+import apache.poi.annotation.ExcelReport;
+
 public class ProdutoDTO {
 
+	@ExcelReport(descricaoColuna = "CÓDIGO")
 	private Long id;
 
+	@ExcelReport(descricaoColuna = "DESCRIÇÃO")
 	private String descricao;
 
+	@ExcelReport(descricaoColuna = "NÚMERO GTIN")
 	private Long gtin;
 
+	@ExcelReport(descricaoColuna = "PREÇO")
 	private BigDecimal preco;
 
 	public Long getId() {
